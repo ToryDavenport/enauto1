@@ -19,6 +19,87 @@
   "links": [],
   "panels": [
     {
+      "columns": [],
+      "datasource": "Docker InfluxDB",
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 6,
+      "links": [],
+      "options": {},
+      "pageSize": null,
+      "scroll": true,
+      "showHeader": true,
+      "sort": {
+        "col": 0,
+        "desc": true
+      },
+      "styles": [
+        {
+          "alias": "Time",
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "pattern": "Time",
+          "type": "date"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "decimals": 2,
+          "pattern": "/.*/",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "alias": "CDP neighbor hostnames",
+          "groupBy": [
+            {
+              "params": [
+                "1m"
+              ],
+              "type": "time"
+            }
+          ],
+          "measurement": "Cisco-IOS-XE-cdp-oper:cdp-neighbor-details/cdp-neighbor-detail",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "device_name"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "distinct"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "CDP neighbor updates",
+      "transform": "timeseries_to_columns",
+      "type": "table"
+    },
+    {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
@@ -28,10 +109,10 @@
       "gridPos": {
         "h": 9,
         "w": 12,
-        "x": 0,
+        "x": 12,
         "y": 0
       },
-      "id": 4,
+      "id": 2,
       "legend": {
         "avg": false,
         "current": false,
@@ -43,6 +124,7 @@
       },
       "lines": true,
       "linewidth": 1,
+      "links": [],
       "nullPointMode": "null",
       "options": {},
       "percentage": false,
@@ -55,11 +137,11 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "Free memory",
+          "alias": "CPU 5sec",
           "groupBy": [
             {
               "params": [
-                "$__interval"
+                "10s"
               ],
               "type": "time"
             },
@@ -70,7 +152,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "Cisco-IOS-XE-memory-oper:memory-statistics/memory-statistic",
+          "measurement": "Cisco-IOS-XE-process-cpu-oper:cpu-usage/cpu-utilization",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -79,81 +161,7 @@
             [
               {
                 "params": [
-                  "free_memory"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": []
-        },
-        {
-          "alias": "Total memory",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "Cisco-IOS-XE-memory-oper:memory-statistics/memory-statistic",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "total_memory"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": []
-        },
-        {
-          "alias": "Used memory",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "Cisco-IOS-XE-memory-oper:memory-statistics/memory-statistic",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "C",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "used_memory"
+                  "five_seconds"
                 ],
                 "type": "field"
               },
@@ -170,7 +178,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Panel Title",
+      "title": "CPU Utilization",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -186,7 +194,7 @@
       },
       "yaxes": [
         {
-          "format": "bytes",
+          "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -215,12 +223,12 @@
       "datasource": "Docker InfluxDB",
       "fill": 1,
       "gridPos": {
-        "h": 9,
+        "h": 8,
         "w": 12,
-        "x": 12,
-        "y": 0
+        "x": 0,
+        "y": 8
       },
-      "id": 2,
+      "id": 4,
       "legend": {
         "avg": false,
         "current": false,
@@ -232,6 +240,7 @@
       },
       "lines": true,
       "linewidth": 1,
+      "links": [],
       "nullPointMode": "null",
       "options": {},
       "percentage": false,
@@ -244,7 +253,44 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "CPU util (5sec)",
+          "alias": "Total",
+          "groupBy": [
+            {
+              "params": [
+                "10s"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "Cisco-IOS-XE-memory-oper:memory-statistics/memory-statistic",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "total_memory"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Used",
           "groupBy": [
             {
               "params": [
@@ -259,17 +305,53 @@
               "type": "fill"
             }
           ],
-          "hide": false,
-          "measurement": "Cisco-IOS-XE-process-cpu-oper:cpu-usage/cpu-utilization",
+          "measurement": "Cisco-IOS-XE-memory-oper:memory-statistics/memory-statistic",
           "orderByTime": "ASC",
           "policy": "default",
-          "refId": "A",
+          "refId": "B",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "five_seconds"
+                  "used_memory"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Free",
+          "groupBy": [
+            {
+              "params": [
+                "10s"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "Cisco-IOS-XE-memory-oper:memory-statistics/memory-statistic",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "free_memory"
                 ],
                 "type": "field"
               },
@@ -286,7 +368,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Panel Title",
+      "title": "Memory Utilization",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -361,6 +443,6 @@
   },
   "timezone": "",
   "title": "performance",
-  "uid": "FqvwJLEZz",
+  "uid": "DM4hhKUZk",
   "version": 2
 }

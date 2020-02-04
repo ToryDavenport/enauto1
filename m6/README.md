@@ -15,7 +15,7 @@ the relevant IOS-XE gRPC changes, starts the TIG stack, and prints
 the currently-open TCP ports for verification.
 
 From the router, test connectivity to your telemetry collector,
-which is `10.0.9.188` in the demo.
+which is `10.0.19.188` in the demo.
 
 Be sure your router is on IOS-XE version 16.12 or newer, as dial-out
 gRPC telemetry is a relatively new feature. Also note that very few
@@ -51,7 +51,7 @@ telemetry ietf subscription 101
 # Configure CDP neighbor details subscription (on-change)
 telemetry ietf subscription 102
  encoding encode-kvgpb
- filter xpath /cdp-ios-xe-oper:cdp-neighbor-details/cdp-neighbor-detail/device_name
+ filter xpath /cdp-ios-xe-oper:cdp-neighbor-details/cdp-neighbor-detail/device-name
  stream yang-push
  update-policy on-change
  receiver ip address 10.0.19.188 42518 protocol grpc-tcp
@@ -82,19 +82,28 @@ Telemetry subscription receivers detail:
 
 ## Getting started
 1. Browse to Grafana using the default login credentials `admin/admin`
-and HTTP port 3000. `Example: http://192.168.2.188:3000`
-2. TODO: check data sources
+   and HTTP port 3000. Example: `http://192.168.2.188:3000`
+2. You will be forced to change the password; do so, then continue
+3. Verify that Influxdb is correctly configured as a data source.
+   This should come pre-configured. Click on the gear icon on the
+   left panel ("Configuration").
+4. Click "Data Sources"
+5. There should be a "Docker InfluxDB" entry. Click on it
+6. Scroll down and click "Save and test"
+7. A green bar should appear that says "Data source is working"
+8. Click the Grafana logo in the upper left corner to go to main page
 
 ## Building CPU utilization graph
-1. Select "Create Your First Dashboard"
+1. Select "Create your first dashboard"
 2. Select "Add Query"
-3. Select "InfluxDB" as the data source
+3. Select "Docker InfluxDB" as the "Query" source
 4. Leave the `from default` option
-5. Click `measurement` and choose the `cpu-usage` xpath
-6. Click `field(value)` and choose `five_seconds`
-7. Click `time($__interval)` and change it to 10 seconds to match the period
+5. Click `select measurement` and choose the `cpu-utilization` xpath
+6. Click the word `value` in `field(value)` and choose `five_seconds`
+7. Click the word `$__interval` in `time($__interval)` and change it
+   to 10 seconds to match the period
 8. Enter an optional alias such as "CPU 5sec"
-9. Click the gear icon on the left for general properties
+9. Click the gear/wrench icon on the left for "General" properties
 10. Give the panel a name such as "CPU utilization"
 11. Press ESC key to return to dashboard
 
@@ -102,8 +111,8 @@ and HTTP port 3000. `Example: http://192.168.2.188:3000`
 The process is almost identical to the CPU steps, except using the `memory`
 related data fields.
 
-1. Select "Add panel" from the main dashboard page
-2. Select "Add query"
+1. Select "Add panel" from the main dashboard page (upper-right menu bar)
+2. Select "Add Query"
 3. You can add multiple queries to show many values together. For example:
   * Free memory
   * Used memory
@@ -114,21 +123,23 @@ related data fields.
 
 ## Building a CDP neighbor table
 1. Select "Add panel" from the main dashboard page
-2. Select "Add visualization"
+2. Select "Choose Visualization"
 3. Choose "Table"
-4. Select "InfluxDB" as the data source
-5. Leave the `from default` option
-6. Click `measurement` and choose the `cdp-oper` xpath
-7. Click `field(value)` and choose `device_name`
-8. Remove any existing aggregators/selectors and add `distinct`
-9. Click `time($__interval)` and change it to 1 minute
-10. Remove `fill(null)` so that null entries are left empty
-11. Enter an optional alias such as "CDP neighbor hostnames"
-12. Click the gear icon on the left for general properties
-13. Give the panel a name such as "CDP neighbor updates"
+4. Click the database icon on the left menu for "Queries"
+5. Select "Docker InfluxDB" as the data source
+6. Leave the `from default` option
+7. Click `select measurement` and choose the `cdp-neighbor-detail` xpath
+8. Click the word `value` in `field(value)` and choose `device_name`
+9. Remove existing aggregators/selectors (such as `mean()`) and add `distinct()`
+10. Click the word `$__interval` in `time($__interval)` and change it to 1 minute
+11. Remove `fill(null)` so that null entries are left empty
+12. Enter an optional alias such as "CDP neighbor hostnames"
+13. Click the gear icon on the left for general properties
+14. Give the panel a name such as "CDP neighbor updates"
 
 ## Final steps/notes
 1. Click the floppy disk icon to save the dashboard
 2. You can "zoom in" by setting a time window in the upper right
    using pre-made time ranges, or a custom one
 3. It is useful to refresh the dashboards manually when testing
+   using the refresh button in upper-right corner (not browser refresh)
