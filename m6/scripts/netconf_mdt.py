@@ -21,15 +21,18 @@ def main(hosts):
     with open("vars/mdt.yml", "r") as handle:
         data = safe_load(handle)
 
-    # Iterate over the list of hosts (list of dictionaries)
-    for host in hosts:
+    # Setup the jinja2 templating environment and render the template
+    j2_env = Environment(
+        loader=FileSystemLoader("."), trim_blocks=True, autoescape=True
+    )
+    template = j2_env.get_template("templates/mdt_xml.j2")
+    new_config = template.render(data=data)
 
-        # Setup the jinja2 templating environment and render the template
-        j2_env = Environment(
-            loader=FileSystemLoader("."), trim_blocks=True, autoescape=True
-        )
-        template = j2_env.get_template("templates/mdt_xml.j2")
-        new_config = template.render(data=data)
+    # Optional debugging statement to see the XML body
+    # print(new_config)
+
+    # Iterate over hosts supplied by CLI args
+    for host in hosts:
 
         # Dictionary containing keyword arguments (kwargs) for connecting
         # via NETCONF. Because SSH is the underlying transport, there are

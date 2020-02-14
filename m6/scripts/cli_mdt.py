@@ -20,14 +20,18 @@ def main(hosts):
     with open("vars/mdt.yml", "r") as handle:
         data = safe_load(handle)
 
-    for host in hosts:
+    # Setup the jinja2 templating environment and render the template
+    j2_env = Environment(
+        loader=FileSystemLoader("."), trim_blocks=True, autoescape=True
+    )
+    template = j2_env.get_template("templates/mdt_cli.j2")
+    new_config = template.render(data=data)
 
-        # Setup the jinja2 templating environment and render the template
-        j2_env = Environment(
-            loader=FileSystemLoader("."), trim_blocks=True, autoescape=True
-        )
-        template = j2_env.get_template("templates/mdt_cli.j2")
-        new_config = template.render(data=data)
+    # Optional debugging statement to see the CLI commands
+    print(new_config)
+
+    # Iterate over hosts supplied by CLI args
+    for host in hosts:
 
         # Create netmiko SSH connection handler to access the device
         conn = Netmiko(
