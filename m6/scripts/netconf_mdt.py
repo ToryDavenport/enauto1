@@ -39,7 +39,6 @@ def main(hosts):
         # several minor options to set up.
         connect_params = {
             "host": host,
-            "port": 10000,
             "username": "cisco",
             "password": "cisco",
             "hostkey_verify": False,

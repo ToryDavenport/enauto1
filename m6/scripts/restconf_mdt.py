@@ -41,7 +41,7 @@ def main(hosts):
         # Issue an HTTP PUT request to add the new subscriptions in
         # an idempotent way
         config_resp = requests.put(
-            f"https://{host}:9443/restconf/data/Cisco-IOS-XE-mdt-cfg:mdt-config-data",
+            f"https://{host}/restconf/data/Cisco-IOS-XE-mdt-cfg:mdt-config-data",
             headers=headers,
             json=mdt_body,
             auth=("cisco", "cisco"),

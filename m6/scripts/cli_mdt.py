@@ -36,7 +36,6 @@ def main(hosts):
         # Create netmiko SSH connection handler to access the device
         conn = Netmiko(
             host=host,
-            port=8181,
             username="cisco",
             password="cisco",
             device_type="cisco_ios",
@@ -58,7 +57,7 @@ def main(hosts):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print(f"usage: python netmiko_mdt.py <host1> ... <hostN>")
+        print(f"usage: python cli_mdt.py <host1> ... <hostN>")
         sys.exit(1)
 
     main(sys.argv[1:])
