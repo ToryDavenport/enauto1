@@ -2,8 +2,8 @@
 
 """
 Author: Nick Russo
-Purpose: Using NETCONF with Openconfig YANG models to manage Ethernet
-VLANs on a Cisco NX-OS switch via the always-on Cisco DevNet sandbox.
+Purpose: Using NETCONF with Cisco Native YANG models to manage OSPF/tunnel
+features on a Cisco IOS-XE router in our test network.
 """
 
 
