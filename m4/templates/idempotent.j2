@@ -10,7 +10,7 @@ router ospf 1
 {% set hops = data["routing"]["ttl_security_hops"] %}
 {% if hops == 1 %}
  ttl-security all-interfaces
-{% elif hops > 1 %}
+{% elif hops > 1 and hops < 255 %}
  ttl-security all-interfaces hops {{ hops }}
 {% else %}
  no ttl-security all-interfaces

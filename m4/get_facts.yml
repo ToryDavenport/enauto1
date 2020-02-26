@@ -24,4 +24,5 @@
       template:
         src: "templates/ios_data.j2"
         dest: "{{ playbook_dir }}/outputs/{{ inventory_hostname }}_facts.txt"
+      delegate_to: "localhost"
 ...

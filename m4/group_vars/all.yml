@@ -6,8 +6,8 @@ ansible_user: "cisco"
 ansible_password: "cisco"
 
 # Network parameters
-template_name: "idempotent"
-# template_name: "not_idempotent"
+# template_name: "idempotent"
+template_name: "not_idempotent"
 
 data:
   security:
