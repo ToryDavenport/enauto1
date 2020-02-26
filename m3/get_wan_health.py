@@ -27,6 +27,8 @@ def main():
             commands = safe_load(handle)
 
         # Create netmiko SSH connection handler to access the device
+        # For a list of device types, check the source code:
+        # github.com/ktbyers/netmiko/blob/develop/netmiko/ssh_dispatcher.py#L83
         conn = Netmiko(
             host=host["name"],
             username="cisco",

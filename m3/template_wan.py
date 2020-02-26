@@ -23,15 +23,13 @@ def main():
     with open("vars/inputs.yml", "r") as handle:
         data = safe_load(handle)
 
+    # Setup the jinja2 templating environment and render the template
+    j2_env = Environment(loader=FileSystemLoader("."), autoescape=True)
+    template = j2_env.get_template("templates/routing.j2")
+    new_config = template.render(data=data)
+
     # Iterate over the list of hosts (list of dictionaries)
     for host in host_root["production"]:
-
-        # Setup the jinja2 templating environment and render the template
-        j2_env = Environment(
-            loader=FileSystemLoader("."), trim_blocks=True, autoescape=True
-        )
-        template = j2_env.get_template("templates/routing.j2")
-        new_config = template.render(data=data)
 
         # Create netmiko SSH connection handler to access the device
         conn = Netmiko(
