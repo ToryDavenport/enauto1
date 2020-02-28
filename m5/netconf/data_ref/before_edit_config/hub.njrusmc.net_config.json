@@ -55,9 +55,6 @@
             "auto-cost": null,
             "passive-interface": {
               "interface": "GigabitEthernet3"
-            },
-            "ttl-security": {
-              "hops": "1"
             }
           }
         }

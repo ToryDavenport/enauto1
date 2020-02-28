@@ -13,8 +13,7 @@ as `root` using `sudo`.
 ## Using the tool
 1. Navigate to `http://<host>:9269` in a web browser (not HTTPS).
 2. Provide a device IP/hostname followed by the username and password.
-   At the time of this writing, ANX does not support custom NETCONF ports
-   (only TCP 830) nor does it support SSH public key authentication.
+   At the time of this writing, does not support SSH public key authentication.
 3. After logging in, ANX will download and parse all YANG models, which
    may take awhile.
 4. Once complete, you can explore the YANG models in the left-hand panel,
